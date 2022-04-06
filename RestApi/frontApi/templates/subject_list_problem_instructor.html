@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Assignment</h2>
+
+<table class = "table">
+<thead>
+    <tr>
+        <th>SubjectID</th>
+    </tr>
+</thead>
+    <tbody>
+        {% for assign in assigns %}
+        <tr>
+        <td>{{ assign }}</td>
+        <td>
+            <form method="POST" action="{% url 'assign_list_instructor' assign %}">
+                {% csrf_token %}  
+                <button type = "submit" class = "btn btn-primary btn-sm" value='Start Automated Order'>
+                    Show Assignment
+                </a>
+            </form>
+        </td>   
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

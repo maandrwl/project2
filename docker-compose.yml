@@ -1,0 +1,72 @@
+version: "3.9"
+
+services:
+  restapi:
+    image: ${COMPOSE_PROJECT_NAME:-ag}_restapi:${RESTAPI_TAG:-latest}
+    command: python manage.py runserver 0.0.0.0:8000
+    hostname: project-service
+    volumes:
+      # - ./Restapi:/app
+      - ./Restapi/store_output:/app/store_output
+      - ./Restapi/Student:/app/Student
+      - ./Restapi/Subject:/app/Subject
+      # - store_output:/app/store_output:rw
+      # - Student:/app/Student:rw
+      # - Subject:/app/Subject:rw
+    ports:
+      - "8000:8000"
+    networks:
+      - frontend
+      - backend
+
+  stage2:
+    image: ${COMPOSE_PROJECT_NAME:-ag}_backend:${BACKEND_TAG:-latest}
+    command: python stage2.py
+    hostname: stage2-service
+    # volumes:
+    #   - ./backend:/app
+    ports:
+      - "5002:5002"
+    networks:
+      - backend
+
+  stage3:
+    image: ${COMPOSE_PROJECT_NAME:-ag}_backend:${BACKEND_TAG:-latest}
+    command: python stage3.py
+    hostname: stage3-service
+    volumes:
+      # - ./backend:/app
+      - ./Restapi/store_output:/app/store_output
+      - ./Restapi/Student:/app/Student
+      - ./Restapi/Subject:/app/Subject
+      # - store_output:/app/store_output:rw
+      # - Student:/app/Student:rw
+      # - Subject:/app/Subject:rw
+    ports:
+      - "5003:5003"
+    networks:
+      - backend
+
+  stage4:
+    image: ${COMPOSE_PROJECT_NAME:-ag}_backend:${BACKEND_TAG:-latest}
+    command: python stage4.py
+    hostname: stage4-service
+    volumes:
+      # - ./backend:/app
+      - ./Restapi/store_output:/app/store_output
+      - ./Restapi/Student:/app/Student
+      - ./Restapi/Subject:/app/Subject
+    ports:
+      - "5004:5004"
+    networks:
+      - backend
+
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  store_output:
+  Student:
+  Subject:

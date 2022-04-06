@@ -1,0 +1,72 @@
+  
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    * { margin:0; padding:0; }
+    body { font-family: sans-serif;} 
+    #content { margin: 50px; } 
+    a { text-decoration: none; }  
+    
+    .expandable {
+    background: #fff;
+    overflow: hidden;
+    color: #000;   
+    line-height: 50px;
+    
+    pointer-events: none;
+
+    transition: all .5s ease-in-out;
+    height: 0;
+    }
+    
+    .expandable:target {
+    height: auto;
+    }
+</style>
+<h2>Assignment</h2>
+{% if error %}
+    {{ error }}
+{% endif %}
+<td>
+    <form method="GET" action="{% url 'problem_create' subject %}">
+        <button type = "submit" class = "btn btn-primary btn-sm" value='Start Automated Order'>
+            Create Assignment
+        </button>
+    
+    </form>
+</td>
+<table class = "table">
+<thead>
+    <tr>
+        <th>ID Subject</th>
+        <th>Assignment</th>
+        <th>Language</th>
+    </tr>
+</thead>
+    <tbody>
+        {% for assign in assigns %}
+        <tr>
+        <td>{{ assign.idSubject }}</td>        
+        <td>{{ assign.assignment }}</td> 
+        <td>{{ assign.language }}</td>
+        <td>
+            <form action="{% url 'problem_detail' assign.idSubject assign.assignment %}">
+                {% csrf_token %}  
+                <button type = "submit" class = "btn btn-primary btn-sm" value='Start Automated Order'>
+                    Show detail
+                </button>
+            </form>
+        </td>
+        <td>
+            <form method="POST" action="{% url 'problem_delete' assign.idSubject assign.assignment %}">
+                {% csrf_token %}  
+                <button type = "submit" class = "btn btn-danger btn-sm" value='Start Automated Order' onclick="return confirm('ต้องการลบโจทย์นี้ใช่ไหม?');">
+                    Delete
+                </button>
+            </form>
+        </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

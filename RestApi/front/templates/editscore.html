@@ -1,0 +1,39 @@
+{% extends 'topbar.html' %}
+
+{% block content%}
+  <form class="container-fluid justify-content-md-center">
+    <h1>{{i.CourseName}}</h1>
+  </form>  
+  <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Student list</th>
+          <th scope="col">Score</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Student 1</td>
+          <td></td>
+          <td><a type="button" class="btn btn-primary"  data-placement="top" title="Edit">Edit</a></td>
+          
+        </tr>
+
+        <tr>
+          <td>Student 2</td>
+          <td></td>
+          <td><a type="button" class="btn btn-primary"  data-placement="top" title="Edit">Edit</a></td>
+          
+        </tr>
+
+        <tr>
+          <td>Student 3</td>
+          <td></td>
+          <td><a type="button" class="btn btn-primary"  data-placement="top" title="Edit">Edit</a></td>
+          
+        </tr>
+     
+      </tbody>
+    </table>
+{% endblock %}

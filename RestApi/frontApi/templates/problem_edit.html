@@ -1,0 +1,32 @@
+  
+{% extends 'base.html' %}
+{% block content %}
+    {%if error %}
+        {{ error }}
+    {% endif %}
+    <form method="POST" action="{% url 'problem_edit' subject assign %}" enctype="multipart/form-data" >
+        {% csrf_token %}  
+        <div class="form-group">
+            <label class="form-label" for="customFile">File Assignment</label>
+            <input type="file" class="form-control" id="customFile" name="fileAssignment" />
+            <small id="FormatHelp" class="form-text text-muted">Insert assignment file</small>
+        </div>
+        <div class="form-group">
+            <label for="formFileMultiple" class="form-label">File Input</label>
+            <input class="form-control" type="file" id="formFileMultiple" multiple name="filesInput" />
+            <small id="FormatHelp" class="form-text text-muted">Insert input files</small>
+        </div>
+        <div class="form-group">
+            <label for="formFileMultiple" class="form-label">File Output</label>
+            <input class="form-control" type="file" id="formFileMultiple" multiple name="filesOutput" />
+            <small id="FormatHelp" class="form-text text-muted">Insert output files</small>
+        </div>
+        <div class="form-group">
+            <label for="formFileMultiple" class="form-label">otherFiles</label>
+            <input class="form-control" type="file" id="formFileMultiple" multiple name="otherFiles" />
+            <small id="FormatHelp" class="form-text text-muted">Insert other files</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+{% endblock %}

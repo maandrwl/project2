@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>HomePage</h2>
+<p>Welcome to Upload UI 
+    {% if user.is_authenticated %} 
+    , Prof. {{ user.username }} 
+    {% endif %}
+</p>
+{% endblock %}

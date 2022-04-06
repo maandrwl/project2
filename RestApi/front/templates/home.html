@@ -1,0 +1,26 @@
+{% extends 'topbar.html' %}
+
+{% block content%}
+{% if user.is_authenticated %}
+  <br></br>
+  <body>
+    <h1 align="center">Welcome to website</h1>
+    <p align="center">Welcome, {{ user.username }} 
+    </p>
+    <nav class="navbar">
+        <form class="container-fluid justify-content-md-center">
+          <a href="/course-t"  type="button" class="btn btn-primary">Go to Course</a>
+            &nbsp;
+          <a href="/profile" type="button" class="btn btn-primary">Go to Profile</a>
+        </form>
+    </nav>
+  </body>
+  <p>
+    <strong>Total user:</strong> {{ count }}
+  </p>
+{% else %}
+  <form class="form-inline my-2 my-lg-0">
+      <a href="{% url 'login' %}" class="btn btn-outline-secondary">Log in</a>
+  </form>
+{% endif %}
+{% endblock %}

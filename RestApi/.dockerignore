@@ -1,0 +1,33 @@
+# Docker
+**/Dockerfile*
+**/docker-compose*.yml
+**/.dockerignore
+**/.env
+
+# Git
+**/.gitignore
+**/.git
+**/.github
+**/.gitmodules
+
+# javascript
+node_modules/
+token.json
+credentials.json
+
+# Python
+*.pyc
+**/__pycache__
+
+# Golang
+**/*.exe*
+
+# database
+
+# project
+**/README.md
+
+# Misc
+**/.idea
+**/.vscode
+**/.DS_Store

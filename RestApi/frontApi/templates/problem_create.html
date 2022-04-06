@@ -1,0 +1,55 @@
+  
+{% extends 'base.html' %}
+{% block content %}
+    {%if error %}
+        {{ error }}
+    {% endif %}
+    <form method="POST" action="{% url 'problem_create' subject %}" enctype="multipart/form-data" >
+        {% csrf_token %}  
+        <div class="form-group">
+            <label for="InputAssignment">Assignment</label>
+            <input type="text" class="form-control" id="Assignment" aria-describedby="AssignmentHelp" placeholder="Enter Assigment ID" name="assignId">
+            <small id="AssignmentHelp" class="form-text text-muted">Example: A01, A02, A03, etc</small>
+        </div>
+        <div class="form-group">
+            <select class="form-control" name="language">
+                <option>Python</option>
+                <option>Java</option>
+            </select>
+            <small id="FormatHelp" class="form-text text-muted">Select programming language</small>
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="format" id="format1" value="True" checked>
+                <label class="form-check-label" for="inlineRadio1">Format</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="format" id="format2" value="False">
+                <label class="form-check-label" for="inlineRadio2">Unformat</label>
+            </div>
+            <small id="FormatHelp" class="form-text text-muted">Choose to judge base on format or not</small>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="customFile">File Assignment</label>
+            <input type="file" class="form-control" id="customFile" name="fileAssignment" />
+            <small id="FormatHelp" class="form-text text-muted">Insert assignment file</small>
+        </div>
+        <div class="form-group">
+            <label for="formFileMultiple" class="form-label">File Input</label>
+            <input class="form-control" type="file" id="formFileMultiple" multiple name="filesInput" />
+            <small id="FormatHelp" class="form-text text-muted">Insert input files</small>
+        </div>
+        <div class="form-group">
+            <label for="formFileMultiple" class="form-label">File Output</label>
+            <input class="form-control" type="file" id="formFileMultiple" multiple name="filesOutput" />
+            <small id="FormatHelp" class="form-text text-muted">Insert output files</small>
+        </div>
+        <div class="form-group">
+            <label for="formFileMultiple" class="form-label">otherFiles</label>
+            <input class="form-control" type="file" id="formFileMultiple" multiple name="otherFiles" />
+            <small id="FormatHelp" class="form-text text-muted">Insert other files</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+{% endblock %}

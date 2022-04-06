@@ -1,0 +1,38 @@
+  
+{% extends 'base.html' %}
+{% block content %}
+<h2>Assignment</h2>
+
+<form action="{% url 'assign_list' subject %}">
+    {% csrf_token %}  
+    <button type = "submit" class = "btn btn-primary btn-sm" value='Start Automated Order'>
+        back
+    </button>
+</form>
+
+<table class = "table">
+<thead>
+    <tr>
+        <th>ID Subject</th>
+        <th>Assignment</th>
+        <th>Score</th>
+        <th>Time</th>
+        <th>Status</th>
+    </tr>
+</thead>
+    <tbody>
+            {% for assign in assigns %}
+            <tr>
+            <td>{{ assign.idSubject }}</td>        
+            <td>{{ assign.assignment }}</td> 
+            <td>{{ assign.score }}</td>
+            <td>{{ assign.timeIn }}</td>
+            <td>{{ assign.check }}</td>
+            {% if assign.error %}
+                <td>{{ assign.error }}</td>
+            {% endif %}
+            </tr>
+            {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

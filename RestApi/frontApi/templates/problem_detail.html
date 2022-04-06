@@ -1,0 +1,74 @@
+  
+{% extends 'base.html' %}
+{% block content %}
+<h2>Assignment</h2>
+
+
+<form style="display: inline-block;" action="{% url 'problem_list' assigns.idSubject.idSubject %}">
+    <button type = "submit" class = "btn btn-primary btn-sm" value='Start Automated Order'>
+        Back
+    </button>
+</form>
+<form style="display: inline-block;" action="{% url 'problem_edit' assigns.idSubject.idSubject assigns.assignment %}">
+    <button type = "submit" class = "btn btn-primary btn-sm" value='Start Automated Order'>
+        Edit
+    </button>
+</form>
+
+<table class = "table">
+    <tbody>
+        <tr>
+            <th>SUBJECT</th>
+            <td>{{ assigns.idSubject.idSubject }}</td>
+        </tr>
+        <tr>
+            <th>ASSIGNMENT</th>   
+            <td>{{ assigns.assignment }}</td>
+        </tr>
+        <tr>
+            <th>SCORE</th>   
+            <td>{{ assigns.score }}</td>
+        </tr>
+        <tr>
+            <th>LANGUAGE</th>   
+            <td>{{ assigns.language }}</td>
+        </tr>
+        <tr>
+            <th>FORMAT</th>   
+            <td>{{ assigns.format }}</td>
+        </tr>
+        <tr>
+            <th>STATUS ERROR</th>   
+            <td>{{ assigns.error }}</td>
+        </tr>
+        <tr>
+            <th>FILENAME</th>   
+            <td>{{ assigns.pathMainFile }}</td>
+        </tr>
+        <tr>
+            <th>INPUT FILE</th>   
+            <th>OUTPUT FILE</th>
+            {% for itemin, itemout in ItemInOuts %}
+                <tr>
+                    <td>&emsp;&emsp;&emsp;{{ itemin }}</td>   
+                    <td>&emsp;&emsp;&emsp;{{ itemout }}</td>  
+                </tr>
+            {% endfor %}
+        </tr>
+        <tr>
+            <th>RESULT</th>
+        
+        {% if result %}
+            {% for key, item in result %}
+            <tr>
+                <td>&emsp;&emsp;&emsp;{{ key }}</td>
+                <td>&emsp;&emsp;&emsp;{{ item }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <td>An error occurred, please recheck your file and try again</td>
+        {% endif %}
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

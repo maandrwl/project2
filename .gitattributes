@@ -1,0 +1,2 @@
+# Let Git automatically determine line endings of text files for each OS.
+* text=auto

@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  restapi:
+    image: ${COMPOSE_PROJECT_NAME:-ag}_restapi:${RESTAPI_TAG:-latest}
+    build:
+      context: ./RestApi
+      dockerfile: Dockerfile-RestApi
+      args:
+        BASE_IMAGE_TAG: 3.9.5-alpine
+        DJANGO_SUPERUSER_USERNAME: admin
+        DJANGO_SUPERUSER_PASSWORD: admin
+        DJANGO_SUPERUSER_EMAIL: admin@admin.org
+    volumes:
+      - "./RestApi/frontApi:./RestApi/frontApi"
+      - "./RestApi/front:./RestApi/front"
+  stage:
+    image: ${COMPOSE_PROJECT_NAME:-ag}_backend:${BACKEND_TAG:-latest}
+    build:
+      context: ./backend
+      dockerfile: Dockerfile-Backend
+      args:
+        BASE_IMAGE_TAG: 3.9.5-alpine

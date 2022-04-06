@@ -1,0 +1,17 @@
+{% extends 'topbar.html' %}
+
+{% block content%}
+
+<br></br>
+<div style="background-color:#212529; width: 400px;  border-radius: 24px; padding:45px 16px 77px 16px;" class="mx-auto align-self-center">
+    <h1 style="color: #fff; font-size: 30px; margin-bottom: 32px;">Delete Course</h1>
+
+    <p style="color: #fff;">Are you sure you wanat to delete "{{item}}" ?</p>
+    <form action="{% url 'delete_course' item.id %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary" name="Confirm" value="Confirm">
+        <br>
+        <a href="{% url 'subject' %}">Cancel</a>
+    </form>
+
+{% endblock %}

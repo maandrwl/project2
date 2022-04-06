@@ -1,0 +1,59 @@
+# syntax=docker/dockerfile:1
+
+# Shared image between stage2/stage3/stage4
+
+#------------------------------
+# base image
+ARG BASE_IMAGE_TAG=3.9.5-alpine
+FROM python:${BASE_IMAGE_TAG} as stage_1
+
+# default working directory in container
+WORKDIR /app
+
+# use requirements file
+COPY requirements.txt .
+
+# get pip to download and install requirements
+RUN pip install -r requirements.txt --no-cache-dir
+
+#------------------------------
+# use multi-stage
+# reuse cache from previous build to reduce rebuild time 
+FROM stage_1 as stage_2
+
+# Install OpenJDK-11
+RUN apk --no-cache add openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
+
+# Setup JAVA_HOME -- useful for docker commandline
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+RUN export JAVA_HOME
+
+# copy all files in build context into WORKDIR of this image
+# use alpine's user "guest", group "users" for file ownership
+# COPY --chown=guest:users . .
+COPY . .
+
+# change file ownership of WORKDIR
+# RUN chown guest:users .
+
+# use alpine user "guest"
+# USER guest
+
+# curl is not installed in alpine by default
+HEALTHCHECK --interval=1m \
+    --timeout=5s \
+    --start-period=1m \
+    --retries=3 \
+    CMD python healthcheck.py || exit 1
+
+# default command using shell form
+#CMD python stage2.py
+#CMD python stage3.py
+#CMD python stage4.py
+#CMD sh
+
+# default command using exec form
+#CMD ["python", "stage2.py"]
+#CMD ["python", "stage3.py"]
+#CMD ["python", "stage4.py"]
+CMD ["sh"]

@@ -1,0 +1,61 @@
+# syntax=docker/dockerfile:1
+
+#------------------------------
+# base image 
+ARG BASE_IMAGE_TAG=3.9.5-alpine
+FROM python:${BASE_IMAGE_TAG} as stage_1
+
+# default working directory in container
+WORKDIR /app
+
+# use requirements file
+COPY requirements.txt .
+
+# get pip to download and install requirements
+RUN pip install -r requirements.txt --no-cache-dir
+
+#------------------------------
+# use multi-stage
+# reuse cache from previous build to reduce rebuild time 
+FROM stage_1 as stage_2
+
+# copy all files in build context into WORKDIR of this image
+# use alpine's user "guest", group "users" for file ownership
+#COPY --chown=guest:users . .
+COPY . .
+
+# default exposed port is the same as container port
+EXPOSE 8000
+
+#------------------------------
+FROM stage_2 as stage_3
+
+# provide non-interactive input for "createsuperuser" command
+# to change the default, pass new values to --build-arg option
+#
+# https://docs.djangoproject.com/en/3.2/ref/django-admin/#createsuperuser
+ARG DJANGO_SUPERUSER_USERNAME
+ARG DJANGO_SUPERUSER_PASSWORD
+ARG DJANGO_SUPERUSER_EMAIL
+
+# disable python bytecode when building image
+# change file ownership of WORKDIR
+RUN PYTHONDONTWRITEBYTECODE=1 python manage.py makemigrations \
+    && PYTHONDONTWRITEBYTECODE=1 python manage.py migrate \
+    && PYTHONDONTWRITEBYTECODE=1 python manage.py createsuperuser --no-input
+
+# use alpine's user "guest" to run this container
+#USER guest
+
+# curl is not installed in alpine by default
+HEALTHCHECK --interval=1m \
+    --timeout=5s \
+    --start-period=1m \
+    --retries=3 \
+    CMD python healthcheck.py || exit 1
+
+# default command using shell form
+#CMD python manage.py runserver 0.0.0.0:8000
+
+# default command using exec form
+#CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

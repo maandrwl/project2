@@ -1,0 +1,20 @@
+{% extends 'topbar.html' %}
+
+{% block content%}
+
+<br></br>
+
+<div style="background-color:#212529; width: 400px;  border-radius: 24px; padding:45px 16px 77px 16px;" class="mx-auto align-self-center">
+    <h1 style="color: #fff; font-size: 30px; margin-bottom: 32px;">Create Course</h1>
+
+    <form action="" method="POST">
+        <div style="color: #fff;">
+          {% csrf_token %}
+          {{form.as_p}}
+        </div>
+        <br>
+
+        <input type="submit" class="btn btn-primary" name="submit" value="create">
+    </form>
+</div>
+{% endblock %}
