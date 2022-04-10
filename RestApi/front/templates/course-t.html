@@ -41,7 +41,7 @@
                 <td>
                   <a href="{% url 'update_course' i.id %}"  type="button" class="btn btn-secondary">Edit</a>
                   <a href="{% url 'delete_course' i.id %}"  type="button" class="btn btn-danger">Delete</a>
-                  <a href="/assignment-t"  type="button" class="btn btn-primary" >Enter</a>
+                  <a href="{% url 'assign_list' slug=subject.slug %}"  type="button" class="btn btn-primary" >Enter</a>
                 </td>
               
               </tr>

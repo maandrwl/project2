@@ -25,9 +25,12 @@ def home(request):
 
 
 #Assignment from teacher site
+
+
 @login_required
 @allowed_users(allowed_roles=['admin','teacher'])
 def asteacher(request):
+    
     assign = Assign.objects.all().order_by('-date_created')
     return render(request,'assignment-t.html',{'assign':assign})
 
@@ -140,6 +143,18 @@ def deletecourse(request, pk):
 
     context = {'item':course}
     return render(request,'deletecourse.html', context)
+
+@login_required
+@allowed_users(allowed_roles=['admin','teacher'])
+def assignlist(request):
+
+    #assignlist = Item.objects.get(id=pk)
+    #if request.method == 'POST' :
+        #assignlist.delete()
+        #return redirect('/course-t','/course')
+
+    #context = {'list':assignlist}
+    return render(request,'assign_list.html')
 
 @login_required
 @allowed_users(allowed_roles=['admin','teacher'])

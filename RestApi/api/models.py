@@ -28,3 +28,4 @@ class Score(models.Model):
     timeIn = models.CharField(max_length=32)
     check = models.BooleanField(default=False)
     error = models.CharField(max_length=256)
+    

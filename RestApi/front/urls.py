@@ -27,16 +27,20 @@ urlpatterns = [
     path("accounts/", include('django.contrib.auth.urls')),
     path("course/", views.course),
     path("assignment/", views.assignment,name='assignstudent'),
+
     path("viewscore/", views.viewscore),
-    #path("login/", views.login),
-    path("assignment-t/", views.asteacher,name='assignteacher'),
+    
     path("editscore/", views.score),
     path("profile/", views.myprofile),
+
     path("course-t/", views.subject,name='subject'),
+    
+    path("assignment-t/", views.asteacher,name='assignteacher'),
 
     path("createassign/", views.create,name='create'),
     path("update_assign/<str:pk>", views.updateassign,name='update_assign'),
     path("delete_assign/<str:pk>", views.deleteassign,name='delete_assign'),
+    path("course-t/<slug:slug>/", views.assignlist,name='assign_list'),
 
     path("newcourse/", views.createcourse,name='newcourse'),
     path("update_course/<str:pk>", views.updatecourse,name='update_course'),
